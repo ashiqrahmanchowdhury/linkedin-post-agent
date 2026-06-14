@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LinkedIn Post Generator — AI Agent</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <!-- ── Header ── -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <i class="fa-brands fa-linkedin"></i>
+        <span>LinkedIn Post Generator Agent</span>
+      </div>
+      <span class="badge">Module 20 - Ai Agent Project</span>
+    </div>
+  </header>
+
+  <!-- ── Main ── -->
+  <main class="main">
+
+    <!-- LEFT: Input Panel -->
+    <section class="panel input-panel">
+      <h2 class="panel-title">Configure Your Post</h2>
+
+      <div class="form-group">
+        <label for="topic">Post Topic <span class="required">*</span></label>
+        <textarea
+          id="topic"
+          rows="3"
+          maxlength="200"
+          placeholder="e.g. AI in Healthcare, Remote Work Productivity, Leadership in 2025…"
+        ></textarea>
+        <span class="char-count" id="char-count">0 / 200</span>
+      </div>
+
+      <div class="form-group">
+        <label for="language">Language</label>
+        <select id="language">
+          {% for lang in languages %}
+          <option value="{{ lang }}">{{ lang }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Tone</label>
+        <div class="tone-grid">
+          {% for tone in tones %}
+          <button
+            class="tone-btn {% if loop.first %}active{% endif %}"
+            data-tone="{{ tone }}"
+          >{{ tone }}</button>
+          {% endfor %}
+        </div>
+      </div>
+
+      <button class="generate-btn" id="gen-btn" onclick="generatePost()">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        Generate Post
+      </button>
+
+      <p class="error-msg" id="error-msg"></p>
+    </section>
+
+    <!-- RIGHT: Output Panel -->
+    <section class="panel output-panel" id="output-panel">
+
+      <!-- Agent Steps -->
+      <div class="agent-steps" id="agent-steps" style="display:none;">
+        <p class="steps-label"><i class="fa-solid fa-robot"></i> Agent working…</p>
+        <div class="step" id="step1"><span class="step-dot"></span>Analyzing topic &amp; intent</div>
+        <div class="step" id="step2"><span class="step-dot"></span>Structuring post outline</div>
+        <div class="step" id="step3"><span class="step-dot"></span>Drafting post content</div>
+        <div class="step" id="step4"><span class="step-dot"></span>Adding hashtags &amp; CTA</div>
+      </div>
+
+      <!-- LinkedIn Post Preview -->
+      <div class="linkedin-card" id="linkedin-card" style="display:none;">
+        <div class="lk-header">
+          <div class="lk-avatar">YN</div>
+          <div class="lk-meta">
+            <strong>Your Name</strong>
+            <span>Professional · Just now · <i class="fa-solid fa-earth-americas" style="font-size:11px;"></i></span>
+          </div>
+        </div>
+        <div class="lk-body" id="lk-body"></div>
+        <div class="lk-footer">
+          <button class="lk-action"><i class="fa-regular fa-thumbs-up"></i> Like</button>
+          <button class="lk-action"><i class="fa-regular fa-comment"></i> Comment</button>
+          <button class="lk-action"><i class="fa-solid fa-retweet"></i> Repost</button>
+          <button class="lk-action"><i class="fa-regular fa-paper-plane"></i> Send</button>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-row" id="action-row" style="display:none;">
+        <button class="act-btn" onclick="copyPost()">
+          <i class="fa-regular fa-copy"></i> Copy Post
+        </button>
+        <button class="act-btn" onclick="generatePost()">
+          <i class="fa-solid fa-arrows-rotate"></i> Regenerate
+        </button>
+        <div class="meta-info" id="meta-info"></div>
+      </div>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="empty-state">
+        <i class="fa-brands fa-linkedin"></i>
+        <p>Your generated post will appear here</p>
+        <span>Enter a topic and click Generate</span>
+      </div>
+
+    </section>
+  </main>
+
+</div>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
