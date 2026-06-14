@@ -4,10 +4,12 @@
 ---
 
 ## 📌 Project Overview
-An AI Agent built with LangChain that generates professional LinkedIn posts based on:
-- **Topic** (e.g. "AI in Healthcare", "Remote Work Productivity")
-- **Language** (English, Bengali, Spanish, French, Arabic, Hindi, Portuguese, German, Mandarin)
-- **Tone** (Professional, Inspirational, Storytelling, Data-driven, Conversational, Thought Leader)
+An AI-powered agent that generates professional LinkedIn posts based on user input.
+
+Users can control:
+- Topic (e.g. "AI in Healthcare", "Remote Work Productivity")
+- Language (English, Bengali, Spanish, French, Arabic, Hindi, Portuguese, German, Mandarin)
+- Tone (Professional, Inspirational, Storytelling, Data-driven, Conversational, Thought Leader)
 
 ---
 
@@ -20,64 +22,72 @@ An AI Agent built with LangChain that generates professional LinkedIn posts base
 ---
 
 ## 📁 Project Structure
+linkedin_agent/
+│── agent.py
+│── app.py
+│── requirements.txt
+│── README.md
+│── templates/
+│   └── index.html
+└── static/
+    ├── css/style.css
+    └── js/main.js
 
 ---
-
-linkedin_agent/
-
-├── agent.py          # LangChain Agent core logic
-
-├── app.py            # Flask web application
-
-├── requirements.txt  # Python dependencies
-
-├── README.md         # Project documentation
-
-├── templates/
-
-│   └── index.html    # Web UI
-
-└── static/
-
-├── css/style.css
-
-└── js/main.js
-
 
 ## 🚀 How to Run
 
 ### 1. Install dependencies
-```bash
-pip install langchain langchain-google-genai google-generativeai flask
-```
+pip install langchain langchain-google-genai google-genai flask python-dotenv
 
-### 2. Add your API Key
-Open `app.py` and add your Gemini API key:
-```python
-API_KEY = os.getenv("GEMINI_API_KEY", "your-gemini-api-key-here")
-```
+---
 
-### 3. Run the app
-```bash
+### 2. Add API Key
+Create a .env file:
+GEMINI_API_KEY=your-gemini-api-key
+
+---
+
+### 3. Run project
 python app.py
-```
+
+---
 
 ### 4. Open browser
-
 http://localhost:5000
 
 ---
 
-## ✅ Features
-- LangChain Agent with ChatPromptTemplate
-- 9 supported languages including Bengali
-- 6 tone options
+## ✨ Features
+- AI-powered LinkedIn post generation
+- Multi-language support (9 languages)
+- Multiple tone selection
 - Flask REST API
-- LinkedIn-style post preview UI
-- Copy to clipboard & Regenerate
+- Modern UI (HTML + CSS + JS)
+- Copy & regenerate functionality
+
+---
+
+## 🧠 Workflow
+User Input → Flask API → Gemini AI → Prompt Engineering → LinkedIn Post Output
 
 ---
 
 ## 👨‍💻 Module 20 Assignment
-**Course**: AI Agents with LangChain  
-**Student**: ASHIQ RAHMAN CHOWHDURY
+Course: AI Agents with LangChain  
+Student: ASHIQ RAHMAN CHOWDHURY
+
+---
+
+## 📌 Notes
+- Uses latest Gemini API
+- Keep API key secure (.env file)
+- Do not upload secrets to GitHub
+
+---
+
+## ⭐ Future Improvements
+- LinkedIn auto-posting system
+- Post scheduling feature
+- Analytics dashboard
+- Advanced prompt optimization
