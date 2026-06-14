@@ -1,13 +1,14 @@
 from flask import Flask, render_template, request, jsonify
 from dotenv import load_dotenv
-import google.generativeai as genai
+from google import genai
 import os
 
 load_dotenv()
 
 app = Flask(__name__)
 
-print("GEMINI KEY:", os.getenv("GEMINI_API_KEY"))
+# 🔑 Gemini client (NEW SDK)
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 
 class LinkedInPostAgent:
@@ -24,26 +25,34 @@ class LinkedInPostAgent:
         "Conversational"
     ]
 
-    def __init__(self, model):
-        self.model = model
+    def __init__(self, client):
+        self.client = client
 
     def generate(self, topic, language="English", tone="Professional"):
 
         prompt = f"""
-Write a LinkedIn post.
+You are a professional LinkedIn post writer.
 
 CRITICAL RULE:
-Write ONLY in {language}. Do not use English.
+Write ONLY in {language}.
+Do NOT use any other language.
 
 Topic: {topic}
 Tone: {tone}
 
+Requirements:
 - 150–250 words
 - 2–4 paragraphs
-- hashtags at end
+- Add hashtags at the end
+- Professional LinkedIn style
+
+Return ONLY the post.
 """
 
-        response = self.model.generate_content(prompt)
+        response = self.client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
 
         return {
             "post": response.text,
@@ -53,10 +62,8 @@ Tone: {tone}
         }
 
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel("models/gemini-2.5-flash")
-
-agent = LinkedInPostAgent(model)
+# 🤖 Agent init
+agent = LinkedInPostAgent(client)
 
 
 @app.route("/")
@@ -72,18 +79,23 @@ def index():
 def generate():
     data = request.get_json()
 
-    topic = data.get("topic", "")
+    topic = data.get("topic", "").strip()
     language = data.get("language", "English")
     tone = data.get("tone", "Professional")
 
-    print("LANG:", language)
+    if not topic:
+        return jsonify({"error": "Topic is required"}), 400
 
     try:
         result = agent.generate(topic, language, tone)
         return jsonify(result)
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        print("ERROR:", str(e))
+        return jsonify({
+            "error": "Generation failed",
+            "detail": str(e)
+        }), 500
 
 
 if __name__ == "__main__":
