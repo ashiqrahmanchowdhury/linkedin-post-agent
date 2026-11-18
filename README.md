@@ -1,5 +1,5 @@
 # 🤖 LinkedIn Post Generator — AI Agent
-### Module 20 Assignment | LangChain + Google Gemini
+### AI Agent that generates professional LinkedIn posts using LangChain and Google Gemini API | LangChain + Google Gemini
 
 ---
 
