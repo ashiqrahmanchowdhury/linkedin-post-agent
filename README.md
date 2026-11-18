@@ -73,9 +73,11 @@ User Input → Flask API → Gemini AI → Prompt Engineering → LinkedIn Post 
 
 ---
 
-## 👨‍💻 Module 20 Assignment
-Course: AI Agents with LangChain  
-Student: ASHIQ RAHMAN CHOWDHURY
+## Author
+ASHIQ RAHMAN CHOWDHURY
+LinkedIn : https://www.linkedin.com/in/ashiqrahmanchowdhuryemon/
+
+GitHub : https://github.com/ashiqrahmanchowdhury
 
 ---
 
